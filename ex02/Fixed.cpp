@@ -136,3 +136,35 @@ Fixed Fixed::operator/(const Fixed& rhs) const{
 	return(this->toFloat() / rhs.toFloat());
 }
 
+
+Fixed& Fixed::operator++(){
+
+	this->value_ += 1;
+
+	return* this;
+}
+
+Fixed Fixed::operator++(int){
+
+	Fixed temp(*this);
+
+	this->value_ += 1;
+
+	return temp;
+}
+
+Fixed& Fixed::operator--(){
+
+	this->value_ -= 1;
+
+	return* this;
+}
+
+Fixed Fixed::operator--(int){
+
+	Fixed temp(*this);
+
+	this->value_ -= 1;
+
+	return temp;
+}

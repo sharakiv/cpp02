@@ -55,6 +55,14 @@ class Fixed{
 
 	Fixed operator/(const Fixed& rhs) const;
 
+	Fixed& operator++();
+
+	Fixed operator++(int);
+
+	Fixed& operator--();
+
+	Fixed operator--(int);
+
 	
 
 };
