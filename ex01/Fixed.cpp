@@ -1,76 +1,48 @@
 #include "Fixed.hpp"
 
-
-
-Fixed::Fixed(){
-
-    std::cout << "Default constructor called" << std::endl;
-
-    this->value_ = 0;
-
+Fixed::Fixed() : value_(0) {
+  std::cout << "Default constructor called" << std::endl;
 }
 
-Fixed::Fixed(const int value ) : value_ (value << fractionalBits_) {
-
-    std::cout << "Int constructor called" << std::endl;
+Fixed::Fixed(const int value) : value_(value << fractionalBits_) {
+  std::cout << "Int constructor called" << std::endl;
 }
 
-Fixed::Fixed(const float value) : value_ (roundf (value *( 1 << fractionalBits_))) {
-
-    std::cout << "Float constructor called" << std::endl;
+Fixed::Fixed(const float value)
+    : value_(roundf(value * (1 << fractionalBits_))) {
+  std::cout << "Float constructor called" << std::endl;
 }
 
-Fixed::Fixed(const Fixed& other){
+Fixed::Fixed(const Fixed& other) {
+  std::cout << "Copy constructor called" << std::endl;
 
-    std::cout << "Copy constructor called" << std::endl;
-
-    this->value_ = other.getRawBits();
+  this->value_ = other.value_;
 }
 
 Fixed& Fixed::operator=(const Fixed& other) {
+  std::cout << "Copy assignment operator called" << std::endl;
 
-    std::cout << "Copy assignment operator called" << std::endl;
-    
-    if (this != &other) { 
-    
-        this->value_ = other.getRawBits();
-    }
-    
-    return *this;                 
+  if (this != &other) {
+    this->value_ = other.value_;
+  }
+
+  return *this;
 }
 
-int Fixed::getRawBits( void ) const{
+int Fixed::getRawBits(void) const { return this->value_; }
 
-    std::cout << "getRawBits member function called" << std::endl;
+void Fixed::setRawBits(int const raw) { this->value_ = raw; }
 
-    return this->value_;
+float Fixed::toFloat(void) const {
+  return static_cast<float>(value_) / (1 << fractionalBits_);
 }
 
-void Fixed::setRawBits( int const raw ){
+int Fixed::toInt(void) const { return value_ >> fractionalBits_; }
 
-    this->value_ = raw;
+std::ostream& operator<<(std::ostream& os, const Fixed& fixed) {
+  os << fixed.toFloat();
+
+  return os;
 }
 
-float Fixed::toFloat( void ) const{
-
-	return (float)value_ /256.0f;
-
-}
-
-int Fixed::toInt( void ) const{
-
-	return value_ >> fractionalBits_;
-
-}
-
-std::ostream& operator<<(std::ostream& os,const Fixed& fixed){
-
-	os << fixed.toFloat();
-
-	return os;
-}
-
-Fixed::~Fixed(){
-
-    std::cout << "Destructor called" << std::endl;
-}
+Fixed::~Fixed() { std::cout << "Destructor called" << std::endl; }
