@@ -7,7 +7,7 @@ Fixed::Fixed(const int value) : value_(value << fractionalBits_) {}
 Fixed::Fixed(const float value)
     : value_(roundf(value * (1 << fractionalBits_))) {}
 
-Fixed::Fixed(const Fixed& other) { this->value_ = other.getRawBits(); }
+Fixed::Fixed(const Fixed& other) : value_(other.value_) {}
 
 Fixed& Fixed::operator=(const Fixed& other) {
   if (this != &other) {
@@ -77,13 +77,13 @@ Fixed Fixed::operator-(const Fixed& rhs) const {
 
 Fixed Fixed::operator*(const Fixed& rhs) const {
   Fixed result;
-  result.setRawBits(((int64_t)this->value_ * rhs.value_) >> fractionalBits_);
+  result.setRawBits(((long)this->value_ * rhs.value_) >> fractionalBits_);
   return result;
 }
 
 Fixed Fixed::operator/(const Fixed& rhs) const {
   Fixed result;
-  result.setRawBits(((int64_t)this->value_ << fractionalBits_) / rhs.value_);
+  result.setRawBits(((long)this->value_ << fractionalBits_) / rhs.value_);
   return result;
 }
 

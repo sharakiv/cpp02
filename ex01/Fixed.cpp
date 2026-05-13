@@ -4,7 +4,7 @@ Fixed::Fixed() : value_(0) {
   std::cout << "Default constructor called" << std::endl;
 }
 
-Fixed::Fixed(const int value) : value_(value << fractionalBits_) {
+Fixed::Fixed(const int value) : value_(value * (1 << fractionalBits_)) {
   std::cout << "Int constructor called" << std::endl;
 }
 
@@ -13,10 +13,8 @@ Fixed::Fixed(const float value)
   std::cout << "Float constructor called" << std::endl;
 }
 
-Fixed::Fixed(const Fixed& other) {
+Fixed::Fixed(const Fixed& other) : value_(other.value_) {
   std::cout << "Copy constructor called" << std::endl;
-
-  this->value_ = other.value_;
 }
 
 Fixed& Fixed::operator=(const Fixed& other) {
@@ -37,7 +35,7 @@ float Fixed::toFloat(void) const {
   return static_cast<float>(value_) / (1 << fractionalBits_);
 }
 
-int Fixed::toInt(void) const { return value_ >> fractionalBits_; }
+int Fixed::toInt(void) const { return value_ / (1 << fractionalBits_); }
 
 std::ostream& operator<<(std::ostream& os, const Fixed& fixed) {
   os << fixed.toFloat();
