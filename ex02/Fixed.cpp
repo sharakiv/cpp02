@@ -1,6 +1,6 @@
 #include "Fixed.hpp"
 
-Fixed::Fixed() { this->value_ = 0; }
+Fixed::Fixed() : value_(0) {}
 
 Fixed::Fixed(const int value) : value_(value << fractionalBits_) {}
 
@@ -76,11 +76,15 @@ Fixed Fixed::operator-(const Fixed& rhs) const {
 }
 
 Fixed Fixed::operator*(const Fixed& rhs) const {
-  return (this->toFloat() * rhs.toFloat());
+  Fixed result;
+  result.setRawBits(((int64_t)this->value_ * rhs.value_) >> fractionalBits_);
+  return result;
 }
 
 Fixed Fixed::operator/(const Fixed& rhs) const {
-  return (this->toFloat() / rhs.toFloat());
+  Fixed result;
+  result.setRawBits(((int64_t)this->value_ << fractionalBits_) / rhs.value_);
+  return result;
 }
 
 Fixed& Fixed::operator++() {
@@ -113,39 +117,39 @@ Fixed Fixed::operator--(int) {
 
 Fixed& Fixed::min(Fixed& a, Fixed& b) {
   if (a < b) {
-    return (a);
+    return a;
   }
 
   else
 
-    return (b);
+    return b;
 }
 
 const Fixed& Fixed::min(const Fixed& a, const Fixed& b) {
   if (a < b) {
-    return (a);
+    return a;
   }
 
   else
 
-    return (b);
+    return b;
 }
 Fixed& Fixed::max(Fixed& a, Fixed& b) {
   if (a > b) {
-    return (a);
+    return a;
   }
 
   else
 
-    return (b);
+    return b;
 }
 
 const Fixed& Fixed::max(const Fixed& a, const Fixed& b) {
   if (a > b) {
-    return (a);
+    return a;
   }
 
   else
 
-    return (b);
+    return b;
 }
