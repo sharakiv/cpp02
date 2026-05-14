@@ -75,6 +75,13 @@ int main(void) {
             << std::endl;
   std::cout << "const版 max(10.5, 20.5)   : " << Fixed::max(cm1, cm2)
             << std::endl;
+  Fixed equal1(5.0f);
+  Fixed equal2(5.0f);
+  std::cout << "equal1's address   : " << &equal1 << std::endl;
+  std::cout << "equal2's address   : " << &equal2 << std::endl;
+  Fixed& minRef = Fixed::min(equal1, equal2);
+  std::cout << "min returned value : " << minRef << std::endl;
+  std::cout << "min returned addr  : " << &minRef << std::endl;
 
   std::cout << "\n========== toInt/toFloatのテスト ==========" << std::endl;
   Fixed conv(42.42f);
@@ -82,5 +89,12 @@ int main(void) {
   std::cout << "toInt()の結果     : " << conv.toInt() << std::endl;
   std::cout << "toFloat()の結果   : " << conv.toFloat() << std::endl;
 
+  std::cout << "\n========== ゼロ、境界値のテスト ==========" << std::endl;
+  Fixed zero(0);
+  Fixed neg_zero(-0.0f);
+  std::cout << "zero == -0.0f : " << (zero == neg_zero) << " (expected: true)"
+            << std::endl;
+  std::cout << "Fixed(0.001f) : " << Fixed(0.001f)
+            << " (expected: 0, precision以下)" << std::endl;
   return 0;
 }

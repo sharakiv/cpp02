@@ -125,41 +125,14 @@ Fixed Fixed::operator--(int) {
   return temp;
 }
 
-Fixed& Fixed::min(Fixed& a, Fixed& b) {
-  if (a < b) {
-    return a;
-  }
-
-  else
-
-    return b;
-}
+Fixed& Fixed::min(Fixed& a, Fixed& b) { return (b < a) ? b : a; }
 
 const Fixed& Fixed::min(const Fixed& a, const Fixed& b) {
-  if (a < b) {
-    return a;
-  }
-
-  else
-
-    return b;
+  return (b < a) ? b : a;
 }
-Fixed& Fixed::max(Fixed& a, Fixed& b) {
-  if (a > b) {
-    return a;
-  }
 
-  else
-
-    return b;
-}
+Fixed& Fixed::max(Fixed& a, Fixed& b) { return (a < b) ? b : a; }
 
 const Fixed& Fixed::max(const Fixed& a, const Fixed& b) {
-  if (a > b) {
-    return a;
-  }
-
-  else
-
-    return b;
+  return (a < b) ? b : a;
 }
