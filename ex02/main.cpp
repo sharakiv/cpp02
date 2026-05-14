@@ -96,5 +96,19 @@ int main(void) {
             << std::endl;
   std::cout << "Fixed(0.001f) : " << Fixed(0.001f)
             << " (expected: 0, precision以下)" << std::endl;
+  //   std::cout << "\n========== 0除算系のテスト ==========" << std::endl;
+  //   Fixed zero(0);
+  //   Fixed five(5);
+  //   std::cout << "0 / 5 = " << (zero / five) << " (expected: 0)" <<
+  //   std::endl; std::cout << "0 * 5 = " << (zero * five) << " (expected: 0)"
+  //   << std::endl; std::cout << "5 - 5 = " << (five - five) << " (expected:
+  //   0)" << std::endl; std::cout << "0 + 0 = " << (zero + zero) << "
+  //   (expected: 0)" << std::endl;
+  std::cout << "\n========== 最後: 0除算でクラッシュする実証 =========="
+            << std::endl;
+  std::cout << "（このあとプログラムは SIGFPE で終了します）" << std::endl;
+  Fixed zero_div(0);
+  Fixed five_div(5);
+  std::cout << "5 / 0 = " << (five_div / zero_div) << std::endl;
   return 0;
 }
