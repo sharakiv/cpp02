@@ -1,19 +1,27 @@
 #include "Fixed.hpp"
 
-Fixed::Fixed() : value_(0) {}
+Fixed::Fixed() : value_(0) {
+  std::cout << "Default constructor called" << std::endl;
+}
 
-Fixed::Fixed(const int value) : value_(value << fractionalBits_) {}
+Fixed::Fixed(const int value) : value_(value * (1 << fractionalBits_)) {
+  std::cout << "Int constructor called" << std::endl;
+}
 
 Fixed::Fixed(const float value)
-    : value_(roundf(value * (1 << fractionalBits_))) {}
+    : value_(roundf(value * (1 << fractionalBits_))) {
+  std::cout << "Float constructor called" << std::endl;
+}
 
-Fixed::Fixed(const Fixed& other) : value_(other.value_) {}
+Fixed::Fixed(const Fixed& other) : value_(other.value_) {
+  std::cout << "Copy constructor called" << std::endl;
+}
 
 Fixed& Fixed::operator=(const Fixed& other) {
+  std::cout << "Copy assignment operator called" << std::endl;
   if (this != &other) {
     this->value_ = other.getRawBits();
   }
-
   return *this;
 }
 
@@ -22,7 +30,7 @@ int Fixed::getRawBits(void) const { return this->value_; }
 void Fixed::setRawBits(int const raw) { this->value_ = raw; }
 
 float Fixed::toFloat(void) const {
-  return (float)value_ / (1 << fractionalBits_);
+  return static_cast<float>(value_) / (1 << fractionalBits_);
 }
 
 int Fixed::toInt(void) const { return value_ >> fractionalBits_; }
@@ -33,7 +41,7 @@ std::ostream& operator<<(std::ostream& os, const Fixed& fixed) {
   return os;
 }
 
-Fixed::~Fixed() {}
+Fixed::~Fixed() { std::cout << "Destructor called" << std::endl; }
 
 bool Fixed::operator>(const Fixed& rhs) const {
   return this->value_ > rhs.value_;
@@ -77,13 +85,15 @@ Fixed Fixed::operator-(const Fixed& rhs) const {
 
 Fixed Fixed::operator*(const Fixed& rhs) const {
   Fixed result;
-  result.setRawBits(((long)this->value_ * rhs.value_) >> fractionalBits_);
+  result.setRawBits((static_cast<long>(this->value_) * rhs.value_) >>
+                    fractionalBits_);
   return result;
 }
 
 Fixed Fixed::operator/(const Fixed& rhs) const {
   Fixed result;
-  result.setRawBits(((long)this->value_ << fractionalBits_) / rhs.value_);
+  result.setRawBits((static_cast<long>(this->value_) << fractionalBits_) /
+                    rhs.value_);
   return result;
 }
 
