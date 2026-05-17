@@ -25,6 +25,8 @@ Fixed& Fixed::operator=(const Fixed& other) {
   return *this;
 }
 
+Fixed::~Fixed() { std::cout << "Destructor called" << std::endl; }
+
 int Fixed::getRawBits(void) const { return this->value_; }
 
 void Fixed::setRawBits(int const raw) { this->value_ = raw; }
@@ -40,8 +42,6 @@ std::ostream& operator<<(std::ostream& os, const Fixed& fixed) {
 
   return os;
 }
-
-Fixed::~Fixed() { std::cout << "Destructor called" << std::endl; }
 
 bool Fixed::operator>(const Fixed& rhs) const {
   return this->value_ > rhs.value_;
